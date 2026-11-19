@@ -1,0 +1,25 @@
+{
+  "name": "chatgpt-short-answer",
+  "description": "模拟 ChatGPT 一条短回答：token 级增长 → DOM 稳定 → SSE 静默 → committed",
+  "steps": [
+    { "at": 0, "text": "", "quietMs": 0 },
+    { "at": 200, "text": "闭", "quietMs": 0 },
+    { "at": 400, "text": "闭包", "quietMs": 0 },
+    { "at": 600, "text": "闭包是", "quietMs": 0 },
+    { "at": 800, "text": "闭包是 JavaScript", "quietMs": 0 },
+    { "at": 1000, "text": "闭包是 JavaScript 中", "quietMs": 0 },
+    { "at": 1200, "text": "闭包是 JavaScript 中函数", "quietMs": 0 },
+    { "at": 1400, "text": "闭包是 JavaScript 中函数和其", "quietMs": 0 },
+    { "at": 1600, "text": "闭包是 JavaScript 中函数和其词法", "quietMs": 0 },
+    { "at": 1800, "text": "闭包是 JavaScript 中函数和其词法环境的组合", "quietMs": 0 },
+    { "at": 2000, "text": "闭包是 JavaScript 中函数和其词法环境的组合。", "quietMs": 0 },
+    { "at": 2100, "text": "闭包是 JavaScript 中函数和其词法环境的组合。", "quietMs": 900 },
+    { "at": 2200, "text": "闭包是 JavaScript 中函数和其词法环境的组合。", "quietMs": 1000 },
+    { "at": 2300, "text": "闭包是 JavaScript 中函数和其词法环境的组合。", "quietMs": 1100 }
+  ],
+  "expect": {
+    "committed": true,
+    "finalTextPrefix": "闭包是 JavaScript",
+    "finalLength": 25
+  }
+}

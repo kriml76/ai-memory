@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "AI Forget — 聊天记录的记忆衰退",
+  "version": "0.1.0",
+  "description": "让 AI 聊天记录像人类记忆一样衰退：过期模糊化，回忆验证解锁。原始记录只存本地。",
+  "permissions": ["storage", "alarms", "activeTab"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://claude.ai/*"
+  ],
+  "background": {
+    "service_worker": "src/background/serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*"
+      ],
+      "js": ["src/content/index.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "src/ui/popup.html",
+    "default_title": "AI Forget"
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
+}

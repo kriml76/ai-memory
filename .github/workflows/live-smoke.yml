@@ -1,0 +1,63 @@
+name: live-smoke
+
+# 每日定时对真实 ChatGPT/Claude 页面做冒烟测试。
+# 失败自动开 issue（含 DOM dump），Devin 按 SELECTOR_PLAYBOOK 修复。
+
+on:
+  schedule:
+    - cron: "17 3 * * *" # 每天 03:17 UTC
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: ChatGPT 冒烟
+        env:
+          CHATGPT_SESSION_COOKIE: ${{ secrets.CHATGPT_SESSION_COOKIE }}
+        run: npx playwright test --config playwright.live.config.ts --project=chatgpt
+
+      - name: Claude 冒烟
+        env:
+          CLAUDE_SESSION_COOKIE: ${{ secrets.CLAUDE_SESSION_COOKIE }}
+        run: npx playwright test --config playwright.live.config.ts --project=claude
+
+      - name: 失败时开 issue 触发 Devin
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const dump = fs.existsSync('test-results/dom-dump.html')
+              ? fs.readFileSync('test-results/dom-dump.html', 'utf8').slice(0, 60000)
+              : '(no dump)';
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[live-smoke] ${new Date().toISOString().slice(0,10)} 捕获失败`,
+              body: [
+                'live-smoke 定时任务失败，疑似目标站 DOM 变更导致选择器失效。',
+                '',
+                '请按 docs/SELECTOR_PLAYBOOK.md 修复：',
+                '1. 对照下方 DOM dump 更新 extension/src/content/selectors/*.ts',
+                '2. 用 extension/scripts/record-fixture.mjs 录制新 fixture',
+                '3. 本地跑 npm run fixture:replay 全绿后提 PR',
+                '',
+                '<details><summary>DOM dump</summary>',
+                '',
+                '```html', dump, '```',
+                '</details>',
+              ].join('\n'),
+              labels: ['devin-task', 'selector-drift'],
+            });

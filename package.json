@@ -1,0 +1,19 @@
+{
+  "name": "ai-forget",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI chat history that forgets — spaced-repetition decay for AI conversations",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "fixture:replay": "vitest run tests/fixtures",
+    "live:smoke": "playwright test --config playwright.live.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

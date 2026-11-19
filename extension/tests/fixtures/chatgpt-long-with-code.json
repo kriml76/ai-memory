@@ -1,0 +1,19 @@
+{
+  "name": "chatgpt-long-with-code",
+  "description": "模拟长回答含代码块：DOM 稳定后 committed，代码块计入指纹",
+  "steps": [
+    { "at": 0, "text": "", "quietMs": 0 },
+    { "at": 500, "text": "下面是一个", "quietMs": 0 },
+    { "at": 1000, "text": "下面是一个 React", "quietMs": 0 },
+    { "at": 1500, "text": "下面是一个 React 闭包", "quietMs": 0 },
+    { "at": 2000, "text": "下面是一个 React 闭包陷阱", "quietMs": 0 },
+    { "at": 2500, "text": "下面是一个 React 闭包陷阱的例子：", "codeBlocks": ["for(var i=0;i<3;i++){setTimeout(()=>console.log(i))}"], "quietMs": 0 },
+    { "at": 2800, "text": "下面是一个 React 闭包陷阱的例子：", "codeBlocks": ["for(var i=0;i<3;i++){setTimeout(()=>console.log(i))}"], "quietMs": 1000 },
+    { "at": 2900, "text": "下面是一个 React 闭包陷阱的例子：", "codeBlocks": ["for(var i=0;i<3;i++){setTimeout(()=>console.log(i))}"], "quietMs": 1100 },
+    { "at": 3000, "text": "下面是一个 React 闭包陷阱的例子：", "codeBlocks": ["for(var i=0;i<3;i++){setTimeout(()=>console.log(i))}"], "quietMs": 1200 }
+  ],
+  "expect": {
+    "committed": true,
+    "finalTextPrefix": "下面是一个 React"
+  }
+}

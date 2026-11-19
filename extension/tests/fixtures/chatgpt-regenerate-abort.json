@@ -1,0 +1,15 @@
+{
+  "name": "chatgpt-regenerate-abort",
+  "description": "模拟用户点 Regenerate：旧节点被替换 → ABORTED，不提交半截内容",
+  "steps": [
+    { "at": 0, "text": "", "quietMs": 0 },
+    { "at": 300, "text": "这是一个", "quietMs": 0 },
+    { "at": 600, "text": "这是一个很长", "quietMs": 0 },
+    { "at": 900, "text": "这是一个很长的回答", "quietMs": 0 },
+    { "at": 1200, "text": "这是一个很长的回答，被", "quietMs": 0, "nodeAlive": false },
+    { "at": 1500, "text": "这是一个很长的回答，被中断", "quietMs": 1000, "nodeAlive": false }
+  ],
+  "expect": {
+    "committed": false
+  }
+}

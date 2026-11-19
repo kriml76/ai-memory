@@ -1,0 +1,21 @@
+# Devin 环境快照配置
+# 放到 Devin workspace 的 Environment 设置里，或随 repo 提交供 Devin 读取。
+
+setup:
+  - nvm install 20
+  - nvm use 20
+  - npm ci
+  - npx playwright install --with-deps chromium
+
+# 需要的 secrets（在 Devin/GitHub Secrets 配置，不写进仓库）：
+#   LLM_API_KEY            出题与判分用（用户自备 endpoint）
+#   CHATGPT_SESSION_COOKIE live-smoke 用（仅 CI，不进 Devin 会话）
+#   CLAUDE_SESSION_COOKIE  同上
+
+knowledge:
+  - .devin/knowledge.md
+
+# 允许 Devin 自主执行的命令范围：
+#   npm ci / npm test / npm run typecheck / npm run fixture:replay
+#   npx playwright test --config playwright.live.config.ts
+# 禁止：修改 core/decay 参数、上传任何聊天原文、改 manifest host_permissions

@@ -1,0 +1,12 @@
+{
+  "name": "chatgpt-mid-refresh-resume",
+  "description": "模拟页面中途刷新：已有 DOM 扫描到已完成消息（直接 committed 由 adapter 处理），新流式消息正常捕获",
+  "steps": [
+    { "at": 0, "text": "用户上次的回答已经很长很长", "quietMs": 5000 },
+    { "at": 100, "text": "用户上次的回答已经很长很长", "quietMs": 5100 },
+    { "at": 200, "text": "用户上次的回答已经很长很长", "quietMs": 5200 }
+  ],
+  "expect": {
+    "committed": true
+  }
+}
